@@ -7,9 +7,6 @@
 // The holy grail, the bottle, full of golden oat soda, for our consumption
 import { Bottle } from 'bottlejs';
 
-// Third party dependencies
-import 'babel-polyfill';
-
 // Our code to wire
 import config from './lib/config/project.config.js';
 import getLogger from './lib/logger';
