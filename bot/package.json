@@ -1,0 +1,38 @@
+{
+  "name": "serverless-slack-memebot",
+  "version": "1.0.0",
+  "description": "a serverless slack memebot",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "handler.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/GorillaStack/serverless-slack-memebot.git"
+  },
+  "keywords": [
+    "slackbot",
+    "slack",
+    "serverless",
+    "meme",
+    "memebot",
+    "aws",
+    "lambda"
+  ],
+  "author": "Elliott Spira",
+  "bugs": {
+    "url": "https://github.com/GorillaStack/serverless-slack-memebot/issues"
+  },
+  "homepage": "https://github.com/GorillaStack/serverless-slack-memebot#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "bottlejs": "^1.6.0",
+    "co": "^4.6.0",
+    "dotenv": "^4.0.0",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.3"
+  },
+  "devDependencies": {
+    "serverless-offline": "^3.10.2"
+  }
+}

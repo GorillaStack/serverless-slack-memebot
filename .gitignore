@@ -1,0 +1,7 @@
+node_modules
+.serverless
+.env
+dist
+coverage
+*.log
+.DS_Store
