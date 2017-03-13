@@ -23,6 +23,7 @@ export default function getContainer() {
   bottle.factory('SlackApiManager', container => {
     const service = new SlackApiManager();
     service.setLogger(container.Logger);
+    service.setConfig(config.slack);
     return service;
   });
 
