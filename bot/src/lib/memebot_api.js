@@ -5,7 +5,6 @@
 */
 
 import co from 'co';
-import rp from 'request-promise-native';
 
 // =============
 // Constants
@@ -61,7 +60,8 @@ export default class MemebotApi {
           {
             title: '/memebot create URL; topText; bottomText;',
             value: 'create a custom meme from an image url\n```'
-                      + '/memebot create https://pbs.twimg.com/profile_images/729487390956359680/PKHvdbXb.jpg; squint; like you mean it;```',
+                      + '/memebot create https://pbs.twimg.com/profile_images/729487390956359680/PKHvdbXb.jpg; '
+                      + 'squint; like you mean it;```',
             short: false,
           },
         ],
@@ -76,10 +76,11 @@ export default class MemebotApi {
     return co(function* () {
       const records = yield _this.memeApiManager.search(argumentString);
       let message = '```';
-      for (const record of records) {
+      yield records.forEach(record => {
         const slug = record.template.blank.match(/memegen.link\/([^\/]+)/)[1];
-        message += `<${record.template.example} | ${slug}> - "${record.template.name}" - ${record.template.description}\n`;
-      }
+        message += `<${record.template.example} | ${slug}> - "${record.template.name}" - `
+          + `${record.template.description}\n`;
+      });
 
       message += '```';
       yield _this.slackApiManager.sendSlackMessage(responseUrl, message);
@@ -98,7 +99,8 @@ export default class MemebotApi {
     let memeUrl;
     if (/^http/.test(template)) {
       // We have a custom meme image
-      memeUrl = this.memeApiManager.createCustomUrl(template, this.slugify(topText.trim()), this.slugify(bottomText.trim()));
+      memeUrl = this.memeApiManager.createCustomUrl(template, this.slugify(topText.trim()),
+        this.slugify(bottomText.trim()));
     } else {
       // We have an existing meme template
       memeUrl = this.memeApiManager.createUrl(template, this.slugify(topText.trim()), this.slugify(bottomText.trim()));

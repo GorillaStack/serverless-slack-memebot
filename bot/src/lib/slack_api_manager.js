@@ -21,8 +21,6 @@ export default class SlackApiManager {
     this.config = config;
   }
 
-
-
   /**
   * checkValidVerificationToken
   *
@@ -35,7 +33,6 @@ export default class SlackApiManager {
 
     return true;
   }
-
 
   /**
   * getResponseUrl

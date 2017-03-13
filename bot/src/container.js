@@ -8,7 +8,7 @@
 import { Bottle } from 'bottlejs';
 
 // Our code to wire
-import config from './lib/config/project.config.js';
+import config from './lib/config/project.config';
 import getLogger from './lib/logger';
 
 import SlackApiManager from './lib/slack_api_manager';

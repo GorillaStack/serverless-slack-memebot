@@ -10,9 +10,9 @@
 import 'babel-polyfill';
 import getContainer from '../container';
 
-//=============
+// =============
 // constants
-//=============
+// =============
 
 const SUCCESS_RESPONSE = { statusCode: 200 };
 
@@ -36,19 +36,16 @@ export const handler = (request, context, callback) => {
   // Some debug level logging
   logger.debug('/memebot received request', request);
 
-  memebotApi.interpretSlashCommand(request).then(
+  memebotApi.interpretSlashCommand(request)
+  .then(() => {
     // Success & validation errors/invlid commands
-    result => {
-      logger.info('/memebot invocation successfully completed');
-      callback(null, SUCCESS_RESPONSE);
-    }
-  ).catch(
+    logger.info('/memebot invocation successfully completed');
+    callback(null, SUCCESS_RESPONSE);
+  }).catch(err => {
     // Fatal errors
-    err => {
-      logger.error('/memebot caught error', err);
-      callback(err, ERROR_RESPONSE);
-    }
-  );
+    logger.error('/memebot caught error', err);
+    callback(err, ERROR_RESPONSE);
+  });
 };
 
 export default handler;

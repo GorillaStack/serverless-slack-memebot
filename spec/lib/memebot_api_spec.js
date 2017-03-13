@@ -19,6 +19,7 @@ describe('MemebotApi', () => {
     it('returns type \'search\' with no \'rest\' when argument is \'search      \'', () =>
       expect(memebotApi.stripTypeFromCommandText('search      ')).toEqual({ type: 'search' }));
     it('returns type \'search\' with \'rest\' when argument is \'search  searchTerm\'', () =>
-      expect(memebotApi.stripTypeFromCommandText('search  searchTerm')).toEqual({ type: 'search', rest: ' searchTerm' }));
+      expect(memebotApi.stripTypeFromCommandText('search  searchTerm'))
+        .toEqual({ type: 'search', rest: ' searchTerm' }));
   });
 });

@@ -1,0 +1,17 @@
+{
+  "extends" : "../.eslintrc",
+  "rules": {
+    "no-param-reassign": [ 2, { "props": false } ],
+    "import/no-extraneous-dependencies": [ 2, { "devDependencies": true } ],
+  },
+  "globals" : {
+    "describe" : false,
+    "it" : false,
+    "expect": false,
+    "fail": false,
+    "beforeAll": false,
+    "afterAll": false,
+    "beforeEach": false,
+    "afterEach": false,
+  }
+}

@@ -9,6 +9,7 @@
 // Use dotenv to read environment variables from our .env file
 // Useful for local dev environments, or if you want to supplement framework
 import dotenv from 'dotenv';
+
 dotenv.load();
 
 const config = {
@@ -27,7 +28,7 @@ const config = {
     client_secret: process.env.SLACK_CLIENT_ID,
     verification_token: process.env.SLACK_VERIFICATION_TOKEN,
   },
-}
+};
 
 if (config.environment === 'dev') {
   config.logger.log_level = process.env.LOG_LEVEL || 'debug';
