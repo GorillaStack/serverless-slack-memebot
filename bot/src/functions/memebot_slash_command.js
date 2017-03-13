@@ -14,12 +14,7 @@ import getContainer from '../container';
 // constants
 //=============
 
-const SUCCESS_RESPONSE = {
-  statusCode: 200,
-  body: JSON.stringify({
-    message: 'Successfully invoked /memebot slash command',
-  }),
-};
+const SUCCESS_RESPONSE = { statusCode: 200 };
 
 const ERROR_RESPONSE = {
   statusCode: 500,
