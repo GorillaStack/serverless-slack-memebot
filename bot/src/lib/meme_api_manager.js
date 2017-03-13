@@ -10,6 +10,7 @@ import rp from 'request-promise-native';
 // Constants
 // =============
 const MEMEGEN_API_BASE_URL = 'https://memegen.link/api';
+const MEMEGEN_BASE_URL = 'https://memegen.link/';
 
 export default class MemeApiManager {
   setLogger(logger) {
@@ -32,7 +33,11 @@ export default class MemeApiManager {
     });
   }
 
-  createMeme() {
+  createUrl(templateName, topText, bottomText) {
+    return `${MEMEGEN_BASE_URL}/${templateName}/${topText}/${bottomText}.jpg`;
+  }
 
+  createCustomUrl(imageUrl, topText, bottomText) {
+    return `${MEMEGEN_BASE_URL}/custom/${topText}/${bottomText}.jpg?alt=${imageUrl}`;
   }
 }
