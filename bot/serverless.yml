@@ -9,6 +9,9 @@ provider:
   runtime: nodejs4.3
   timeout: 10
 
+plugins:
+  - serverless-offline
+
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1

@@ -12,7 +12,7 @@ import config from './lib/config/project.config.js';
 import getLogger from './lib/logger';
 
 import SlackApiManager from './lib/slack_api_manager';
-import MemeApi from './lib/meme_api';
+import MemeApiManager from './lib/meme_api_manager';
 import MemebotApi from './lib/memebot_api';
 
 export default function getContainer() {

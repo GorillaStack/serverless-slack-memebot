@@ -11,7 +11,9 @@
 import dotenv from 'dotenv';
 dotenv.load();
 
-export default {
+const config = {
+  environment: process.env.NODE_ENV || 'dev',
+  bot_api_endpoint: process.env.BOT_API_ENDPOINT || 'http://localhost:3000',
 
   // Logger config
   logger: {
@@ -26,3 +28,9 @@ export default {
     verification_token: process.env.SLACK_VERIFICATION_TOKEN,
   },
 }
+
+if (config.environment === 'dev') {
+  config.logger = process.env.LOG_LEVEL || 'debug';
+}
+
+export default config;
