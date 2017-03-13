@@ -5,6 +5,7 @@
 */
 
 import rp from 'request-promise-native';
+import InvalidSlackVerificationTokenException from './exceptions/invalid_slack_verification_token_exception';
 
 // =============
 // Constants
@@ -16,13 +17,23 @@ export default class SlackApiManager {
     this.logger = logger;
   }
 
+  setConfig(config) {
+    this.config = config;
+  }
+
+
+
   /**
   * checkValidVerificationToken
   *
   * Check that the verirification token in the request matches that in our config
   */
   checkValidVerificationToken(request) {
+    if (this.config.verification_token !== request.body.token) {
+      throw new InvalidSlackVerificationTokenException(request.body.token);
+    }
 
+    return true;
   }
 
 
@@ -32,7 +43,7 @@ export default class SlackApiManager {
   * Pulls the responseUrl out of the request
   */
   getResponseUrl(request) {
-    
+    return request.body.response_url;
   }
 
   /**
@@ -42,7 +53,7 @@ export default class SlackApiManager {
   * This should be exclusive of the /memebot text itself
   */
   getSlashCommandText(request) {
-
+    return request.body.text;
   }
 
   sendSlackMessage(webhookUrl, text, attachments = [], responseType) {

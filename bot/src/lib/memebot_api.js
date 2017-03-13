@@ -26,7 +26,7 @@ export default class MemebotApi {
 
 
   sendHelpMessage(rest, responseUrl) {
-    return this.slackApiManager.sendSlackMessage(resoponseUrl, '', [
+    return this.slackApiManager.sendSlackMessage(responseUrl, '', [
       {
         fallback: 'memebot help',
         color: '#33495e',
@@ -66,7 +66,19 @@ export default class MemebotApi {
   * @param {String} text - the slack command text (less /memebot)
   * @return { type: String, rest: String }
   */
-  stripTypeFromCommandText(slashCommandText) {
+  stripTypeFromCommandText(slashCommandText = '') {
+    const trimmedSlashCommandText = slashCommandText.trim();
+    const parts = slashCommandText.length === 0 ? [] : trimmedSlashCommandText.split(' ');
+    if (trimmedSlashCommandText.length === 0) {
+      parts.push('help');
+    }
+
+    const result = { type: parts.shift() };
+    if (parts.length > 0) {
+      result.rest = parts.join(' ');
+    }
+
+    return result;
   }
 
   /**
