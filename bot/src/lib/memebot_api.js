@@ -25,7 +25,7 @@ export default class MemebotApi {
   }
 
 
-  sendHelpMessage(rest, responseUrl) {
+  sendHelpMessage(argumentString, responseUrl) {
     return this.slackApiManager.sendSlackMessage(responseUrl, '', [
       {
         fallback: 'memebot help',
@@ -51,14 +51,24 @@ export default class MemebotApi {
     ]);
   }
 
-  listSlashCommand() {
+  searchSlashCommand(argumentString = '', responseUrl) {
+    const _this = this;
+    return co(function* () {
+      const records = yield _this.memeApiManager.search(argumentString);
+      let message = '```';
+      for (const record of records) {
+        const slug = record.template.blank.match(/memegen.link\/([^\/]+)/)[1];
+        message += `<${record.template.example} | ${slug}> - "${record.template.name}" - ${record.template.description}\n`;
+      }
+
+      message += '```';
+      yield _this.slackApiManager.sendSlackMessage(responseUrl, message);
+    });
   }
 
-  searchSlashCommand() {
+  createSlashCommand(argumentString, responseUrl) {
   }
 
-  createSlashCommand() {
-  }
   /**
   * stripTypeFromCommandText
   *
@@ -100,11 +110,11 @@ export default class MemebotApi {
       const slashCommandText = _this.slackApiManager.getSlashCommandText(request);
       const { type, rest } = _this.stripTypeFromCommandText(slashCommandText);
 
-      if (/^list\s/i.test(slashCommandText)) {
-        yield _this.listSlashCommand(rest, responseUrl);
-      } else if (/^search\s/i.test(slashCommandText)) {
+      if (/^list/i.test(type)) {
+        yield _this.searchSlashCommand('', responseUrl);
+      } else if (/^search/i.test(type)) {
         yield _this.searchSlashCommand(rest, responseUrl);
-      } else if (/^create\s/i.test(slashCommandText)) {
+      } else if (/^create/i.test(type)) {
         yield _this.createSlashCommand(rest, responseUrl);
       } else {
         yield _this.sendHelpMessage(rest, responseUrl);
