@@ -46,18 +46,10 @@ plugins:
 #    - exclude-me-dir/**
 
 functions:
-  # List some meme capabilities
-  list:
-    handler: functions.list
+  # Handler for our /memebot command
+  memebot_slash_command:
+    handler: dist/functions/memebot_slash_command.handler
     events:
      - http:
-         path: memes
-         method: get
-
-  # Create a meme!
-  create:
-    handler: functions.create
-    events:
-     - http:
-         path: memes
+         path: memebot
          method: post

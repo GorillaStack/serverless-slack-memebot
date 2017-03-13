@@ -30,7 +30,7 @@ const config = {
 }
 
 if (config.environment === 'dev') {
-  config.logger = process.env.LOG_LEVEL || 'debug';
+  config.logger.log_level = process.env.LOG_LEVEL || 'debug';
 }
 
 export default config;
