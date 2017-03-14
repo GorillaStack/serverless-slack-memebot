@@ -73,7 +73,7 @@ export default class SlackApiManager {
       json: true,
     };
 
-    return rp(options).promise();
+    return rp(options);
   }
 
 }
