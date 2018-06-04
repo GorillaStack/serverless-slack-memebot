@@ -9,6 +9,7 @@
 
 import 'babel-polyfill';
 import getContainer from '../container';
+import qs from 'qs';
 
 // =============
 // constants
@@ -21,6 +22,18 @@ const ERROR_RESPONSE = {
   body: JSON.stringify({
     message: 'Error invoking /memebot slash command',
   }),
+};
+
+const parseBody = body => {
+  if (typeof body === 'string') {
+    if (/^\{/.test(body)) {
+      return JSON.parse(body);
+    } else {
+      return qs.parse(body);
+    }
+  } else {
+    return body;
+  }
 };
 
 export const handler = (request, context, callback) => {
@@ -36,7 +49,8 @@ export const handler = (request, context, callback) => {
   // Some debug level logging
   logger.debug('/memebot received request', request);
 
-  memebotApi.interpretSlashCommand(request)
+
+  memebotApi.interpretSlashCommand(Object.assign({}, request, { body: parseBody(request.body) }))
   .then(() => {
     // Success & validation errors/invlid commands
     logger.info('/memebot invocation successfully completed');

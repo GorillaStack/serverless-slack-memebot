@@ -31,17 +31,18 @@
   },
   "homepage": "https://github.com/GorillaStack/serverless-slack-memebot#readme",
   "devDependencies": {
-    "babel-cli": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-istanbul": "^0.12.2",
-    "babel-preset-es2015": "^6.22.0",
-    "eslint": "^3.17.1",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^3.9.1",
+    "eslint-config-airbnb-base": "^10.0.1",
+    "eslint-plugin-import": "^2.1.0",
     "jasmine": "^2.5.3",
-    "nock": "^9.0.9",
+    "nock": "^9.3.0",
     "rimraf": "^2.6.1",
     "sinon": "^1.17.7"
+  },
+  "dependencies": {
+    "fsevents": "^1.2.4"
   }
 }

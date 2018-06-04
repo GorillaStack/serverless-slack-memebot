@@ -23,7 +23,6 @@ export default class MemebotApi {
     this.memeApiManager = memeApiManager;
   }
 
-
   sendHelpMessage(argumentString, responseUrl) {
     return this.slackApiManager.sendSlackMessage(responseUrl, '', [
       {

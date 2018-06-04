@@ -1,9 +1,7 @@
 {
-    "extends": "airbnb",
+    "extends": "airbnb-base",
     "plugins": [
-        "import",
-        "react",
-        "jsx-a11y",
+        "import"
     ],
     "rules": {
       "arrow-parens": ["error", "as-needed"],
