@@ -2,7 +2,7 @@
 
 service: serverless-slack-memebot # NOTE: update this with your service name
 
-frameworkVersion: "=1.8.0"
+frameworkVersion: ">1.8.0"
 
 provider:
   name: aws
