@@ -8,8 +8,9 @@ describe('logger.js', () => {
 
   describe('the return value from the getLogger function', () => {
     let logger;
-    beforeAll(() =>
-      logger = getLogger({ log_level: 'info' }));
+    beforeAll(() => {
+      logger = getLogger({ log_level: 'info' });
+    });
 
     it('should be of type object', () =>
       expect(typeof logger).toEqual('object'));

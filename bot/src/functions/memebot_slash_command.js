@@ -8,6 +8,7 @@
 */
 
 import 'babel-polyfill';
+import qs from 'qs';
 import getContainer from '../container';
 
 // =============
@@ -23,6 +24,16 @@ const ERROR_RESPONSE = {
   }),
 };
 
+const parseBody = body => {
+  if (typeof body === 'string') {
+    if (/^\{/.test(body)) {
+      return JSON.parse(body);
+    }
+    return qs.parse(body);
+  }
+  return body;
+};
+
 export const handler = (request, context, callback) => {
   // Get our dependency injection container
   const container = getContainer();
@@ -36,7 +47,8 @@ export const handler = (request, context, callback) => {
   // Some debug level logging
   logger.debug('/memebot received request', request);
 
-  memebotApi.interpretSlashCommand(request)
+
+  memebotApi.interpretSlashCommand(Object.assign({}, request, { body: parseBody(request.body) }))
   .then(() => {
     // Success & validation errors/invlid commands
     logger.info('/memebot invocation successfully completed');

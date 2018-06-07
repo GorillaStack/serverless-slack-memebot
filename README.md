@@ -11,6 +11,16 @@ The key purpose of the talk was to demonstrate how to work with frameworks and m
 
 It is possible to run this slackbot in your slack rooms without deploying to AWS!
 
+#### Local environment variables
+
+The serverless framework will be loading environment variables from the file `bot/.env`.  For security reasons, we ignore this file from the repository.  There is an example file you can copy.
+
+```
+cp bot/.env.example bot/.env
+```
+
+Then, it is important to get `SLACK_CLIENT_ID`, `SLACK_CLIENT_SECRET` and the `SLACK_VERIFICATION_TOKEN` from `Settings` > `Basic Information` within the configuration of the Slack App.
+
 Terminal1:
 
 ```shell
@@ -50,7 +60,6 @@ ngron http 3000
 
 While contributing, or working on your fork, run `npm test` to run tests, `npm run cover` to run tests and check code coverage and `npm run lint` to check our code styling.  To see an HTML report of our code coverage, go to `/path/to/project/coverage/lcov-report/index.html` in your web browser.
 
-
 ### Slack configuration
 
 To integrate your development, production or any other environment with slack, you will need to set up a slack app.
@@ -65,3 +74,5 @@ To integrate your development, production or any other environment with slack, y
 1. Click "Install App to Team" to finish :)
 
 ### Deploy to production
+
+

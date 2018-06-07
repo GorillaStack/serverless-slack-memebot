@@ -19,7 +19,10 @@
     "aws",
     "lambda"
   ],
-  "author": "Elliott Spira",
+  "author": {
+    "name": "Elliott Spira",
+    "email": "elliott@gorillastack.com"
+  },
   "bugs": {
     "url": "https://github.com/GorillaStack/serverless-slack-memebot/issues"
   },
@@ -29,6 +32,7 @@
     "bottlejs": "^1.6.0",
     "co": "^4.6.0",
     "dotenv": "^4.0.0",
+    "qs": "^6.4.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.3",
     "verror": "^1.9.0",
