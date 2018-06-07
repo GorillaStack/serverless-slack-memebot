@@ -6,8 +6,8 @@
   "license": "UNLICENSED",
   "main": "handler.js",
   "scripts": {
-    "compile": "./node_modules/.bin/rimraf bot/dist && ./node_modules/.bin/babel --presets es2015 -d bot/dist bot/src",
-    "compile:dev": "./node_modules/.bin/rimraf bot/dist && ./node_modules/.bin/babel --watch --presets es2015 -d bot/dist bot/src",
+    "compile": "./node_modules/.bin/rimraf bot/dist && ./node_modules/.bin/babel --presets env -d bot/dist bot/src",
+    "compile:dev": "./node_modules/.bin/rimraf bot/dist && ./node_modules/.bin/babel --watch --presets env -d bot/dist bot/src",
     "lint": "./node_modules/.bin/eslint bot/src spec",
     "test": "NODE_ENV=ci node_modules/.bin/babel-node node_modules/.bin/jasmine",
     "cover": "NODE_ENV=ci node_modules/.bin/babel-node ./node_modules/.bin/babel-istanbul cover jasmine"
