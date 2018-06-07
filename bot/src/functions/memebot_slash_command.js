@@ -8,8 +8,8 @@
 */
 
 import 'babel-polyfill';
-import getContainer from '../container';
 import qs from 'qs';
+import getContainer from '../container';
 
 // =============
 // constants
@@ -28,12 +28,10 @@ const parseBody = body => {
   if (typeof body === 'string') {
     if (/^\{/.test(body)) {
       return JSON.parse(body);
-    } else {
-      return qs.parse(body);
     }
-  } else {
-    return body;
+    return qs.parse(body);
   }
+  return body;
 };
 
 export const handler = (request, context, callback) => {

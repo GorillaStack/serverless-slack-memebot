@@ -40,7 +40,7 @@
     "jasmine": "^2.5.3",
     "nock": "^9.3.0",
     "rimraf": "^2.6.1",
-    "sinon": "^1.17.7"
+    "sinon": "^5.1.0"
   },
   "dependencies": {
     "fsevents": "^1.2.4"

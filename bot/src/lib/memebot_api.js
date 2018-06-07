@@ -72,12 +72,13 @@ export default class MemebotApi {
 
   searchSlashCommand(argumentString = '', responseUrl) {
     const _this = this;
-    return co(function* () {
+    return co(function* searchGenerator() {
       const records = yield _this.memeApiManager.search(argumentString);
       let message = '```';
       for (const record of records) {
         const slug = record.template.blank.match(/memegen.link\/([^\/]+)/)[1];
-        message += `<${record.template.example} | ${slug}> - "${record.template.name}" - ${record.template.description}\n`;
+        message += `<${record.template.example} | ${slug}> - `
+          + `"${record.template.name}" - ${record.template.description}\n`;
       }
 
       message += '```';
@@ -136,7 +137,7 @@ export default class MemebotApi {
   */
   interpretSlashCommand(request) {
     const _this = this;
-    return co(function* () {
+    return co(function* interpretGenerator() {
       _this.slackApiManager.checkValidVerificationToken(request);
       const responseUrl = _this.slackApiManager.getResponseUrl(request);
       const slashCommandText = _this.slackApiManager.getSlashCommandText(request);

@@ -3,25 +3,23 @@ import MemebotApi from '../../bot/src/lib/memebot_api';
 import stubLogger from '../support/stub_logger';
 
 const stubSlackApiManager = {
-  sendSlackMessage: () => ({ then: (success, fail) => success() }),
+  sendSlackMessage: sinon.stub().resolves(),
   checkValidVerificationToken: () => true,
   getResponseUrl: () => 'https://fake.com',
   getSlashCommandText: request => request.body.text,
 };
 
 const stubMemeApiManager = {
-  search: () => ({
-    then: (success, fail) => success([{
-      template: {
-        blank: 'memegen.link/slug/blah.jpg',
-        example: 'memegen.link/slug/blah.jpg',
-        name: 'Meme Name',
-        description: 'Meme description',
-      },
-    }])
-  }),
-  createUrl: () => 'fake.com/aldkfh',
-  createCustomUrl: () => 'fake.com/aldkfh',
+  search: sinon.stub().resolves([{
+    template: {
+      blank: 'memegen.link/slug/blah.jpg',
+      example: 'memegen.link/slug/blah.jpg',
+      name: 'Meme Name',
+      description: 'Meme description',
+    },
+  }]),
+  createUrl: sinon.stub().returns('fake.com/aldkfh'),
+  createCustomUrl: sinon.stub().returns('fake.com/aldkfh'),
 };
 
 describe('MemebotApi', () => {
@@ -35,30 +33,13 @@ describe('MemebotApi', () => {
   });
 
   describe('interpretSlashCommand', () => {
-    let searchSpy;
-    let createUrlSpy;
-    let createCustomUrlSpy;
-    let sendSlackMessageSpy;
-
-    beforeAll(() => {
-      searchSpy = sinon.spy(stubMemeApiManager, 'search');
-      createUrlSpy = sinon.spy(stubMemeApiManager, 'createUrl');
-      createCustomUrlSpy = sinon.spy(stubMemeApiManager, 'createCustomUrl');
-      sendSlackMessageSpy = sinon.spy(stubSlackApiManager, 'sendSlackMessage');
-    });
-
-    beforeEach(() => {
-      searchSpy.reset();
-      createUrlSpy.reset();
-      createCustomUrlSpy.reset();
-      sendSlackMessageSpy.reset();
-    });
+    beforeEach(() => sinon.resetHistory());
 
     describe('where no text', () => {
-      it('should return the help text', () => {
+      it('should return the help text', done => {
         memebotApi.interpretSlashCommand({ body: { text: '' } }).then(
           () => {
-            expect(sendSlackMessageSpy.called).toEqual(true);
+            expect(stubSlackApiManager.sendSlackMessage.called).toEqual(true);
             done();
           }, fail);
       });
@@ -68,8 +49,8 @@ describe('MemebotApi', () => {
       it('should invoke search', done => {
         memebotApi.interpretSlashCommand({ body: { text: 'list' } }).then(
           () => {
-            expect(searchSpy.called).toEqual(true);
-            expect(sendSlackMessageSpy.called).toEqual(true);
+            expect(stubMemeApiManager.search.called).toEqual(true);
+            expect(stubSlackApiManager.sendSlackMessage.called).toEqual(true);
             done();
           }, fail);
       });
@@ -79,8 +60,8 @@ describe('MemebotApi', () => {
       it('should invoke search', done => {
         memebotApi.interpretSlashCommand({ body: { text: 'search yuno' } }).then(
           () => {
-            expect(searchSpy.called).toEqual(true);
-            expect(sendSlackMessageSpy.called).toEqual(true);
+            expect(stubMemeApiManager.search.called).toEqual(true);
+            expect(stubSlackApiManager.sendSlackMessage.called).toEqual(true);
             done();
           }, fail);
       });
@@ -90,8 +71,8 @@ describe('MemebotApi', () => {
       it('should invoke search', done => {
         memebotApi.interpretSlashCommand({ body: { text: 'create yuno; top; bottom;' } }).then(
           () => {
-            expect(createUrlSpy.called).toEqual(true);
-            expect(sendSlackMessageSpy.called).toEqual(true);
+            expect(stubMemeApiManager.createUrl.called).toEqual(true);
+            expect(stubSlackApiManager.sendSlackMessage.called).toEqual(true);
             done();
           }, fail);
       });
@@ -99,10 +80,14 @@ describe('MemebotApi', () => {
 
     describe('where text is "create https://custom.image.com/something.jpg; top; bottom;"', () => {
       it('should invoke search', done => {
-        memebotApi.interpretSlashCommand({ body: { text: 'create https://custom.image.com/something.jpg; top; bottom;' } }).then(
+        memebotApi.interpretSlashCommand({
+          body: {
+            text: 'create https://custom.image.com/something.jpg; top; bottom;',
+          },
+        }).then(
           () => {
-            expect(createCustomUrlSpy.called).toEqual(true);
-            expect(sendSlackMessageSpy.called).toEqual(true);
+            expect(stubMemeApiManager.createCustomUrl.called).toEqual(true);
+            expect(stubSlackApiManager.sendSlackMessage.called).toEqual(true);
             done();
           }, fail);
       });

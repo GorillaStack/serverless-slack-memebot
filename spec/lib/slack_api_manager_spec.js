@@ -7,6 +7,7 @@ import stubLogger from '../support/stub_logger';
 const FAKE_TOKEN = 'L0L70k3n';
 describe('SlackApiManager', () => {
   let slackApiManager;
+  const fakeAttachments = [{}, {}];
 
   beforeAll(() => {
     slackApiManager = new SlackApiManager();
@@ -17,7 +18,7 @@ describe('SlackApiManager', () => {
   describe('checkValidVerificationToken', () => {
     it('should throw an InvalidSlackVerificationTokenException where the token does not match', () => {
       try {
-        slackApiManager.checkValidVerificationToken({ body: { token: 'notAliceOrBob' } })
+        slackApiManager.checkValidVerificationToken({ body: { token: 'notAliceOrBob' } });
         fail('Should have thrown an exception');
       } catch (err) {
         expect(err instanceof InvalidSlackVerificationTokenException);
@@ -25,10 +26,9 @@ describe('SlackApiManager', () => {
     });
 
     it('should return true where the tokens match', () => {
-      const result = slackApiManager.checkValidVerificationToken({ body: { token: FAKE_TOKEN } })
+      const result = slackApiManager.checkValidVerificationToken({ body: { token: FAKE_TOKEN } });
       expect(result).toEqual(true);
     });
-
   });
 
   describe('getResponseUrl', () => {
@@ -57,7 +57,6 @@ describe('SlackApiManager', () => {
 
     it('should just add message text to the payload if nothing else specified', done => {
       const fakeMessage = 'fake message';
-      const fakeAttachments = [{}, {}];
 
       slackApiManager.sendSlackMessage(`${fakeUrl}/something`, fakeMessage).then(
         result => {
@@ -71,7 +70,6 @@ describe('SlackApiManager', () => {
 
     it('should add attachments to the payload if specified', done => {
       const fakeMessage = 'fake message';
-      const fakeAttachments = [{}, {}];
 
       slackApiManager.sendSlackMessage(`${fakeUrl}/something`, fakeMessage, fakeAttachments).then(
         result => {
@@ -85,7 +83,6 @@ describe('SlackApiManager', () => {
 
     it('should add response_type if specified', done => {
       const fakeMessage = 'fake message';
-      const fakeAttachments = [{}, {}];
       const responseType = 'in_channel';
 
       slackApiManager.sendSlackMessage(`${fakeUrl}/something`, fakeMessage, fakeAttachments, responseType).then(
