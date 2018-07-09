@@ -74,6 +74,10 @@ export default class MemebotApi {
     const _this = this;
     return co(function* searchGenerator() {
       const records = yield _this.memeApiManager.search(argumentString);
+      if (records.length === 0) {
+        yield _this.slackApiManager.sendSlackMessage(responseUrl, 'No memes found');
+        return;
+      }
       let message = '```';
       for (const record of records) {
         const slug = record.template.blank.match(/memegen.link\/([^\/]+)/)[1];
