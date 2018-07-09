@@ -60,6 +60,24 @@ ngron http 3000
 
 While contributing, or working on your fork, run `npm test` to run tests, `npm run cover` to run tests and check code coverage and `npm run lint` to check our code styling.  To see an HTML report of our code coverage, go to `/path/to/project/coverage/lcov-report/index.html` in your web browser.
 
+
+#### Local slack server
+
+An alternative while testing is to start the included `slackserver` project, which provides a dumb HTTP server that can be
+used to emulate Slack locally. Run:
+
+```shell
+cd slackserver
+npm install
+npm start
+```
+
+Then, when sending JSON to the local memebot endpoint using `sls offline`, use `http://localhost:3192` as the `response_url` parameter e.g.:
+
+```shell
+curl -XPOST http://localhost:3000/memebot -H 'content-type: application/json' -d '{ "response_url": "http://localhost:3192", "token": "abcde12345", "text": "hello" }'
+```
+
 ### Slack configuration
 
 To integrate your development, production or any other environment with slack, you will need to set up a slack app.
