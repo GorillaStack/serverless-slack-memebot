@@ -6,7 +6,7 @@ frameworkVersion: ">1.8.0"
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs8.10
   timeout: 20
 
 plugins:
@@ -44,6 +44,7 @@ plugins:
 #  exclude:
 #    - exclude-me.js
 #    - exclude-me-dir/**
+#  endregion
 
 functions:
   # Handler for our /memebot command
