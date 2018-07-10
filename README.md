@@ -46,7 +46,7 @@ Terminal3:
 #!/bin/bash
 
 ## Use ngrok to expose our localhost:3000 to a public https endpoint
-ngron http 3000
+ngrok http 3000
 ```
 
 While contributing, or working on your fork, run `npm test` to run tests, `npm run cover` to run tests and check code coverage and `npm run lint` to check our code styling.  To see an HTML report of our code coverage, go to `/path/to/project/coverage/lcov-report/index.html` in your web browser.

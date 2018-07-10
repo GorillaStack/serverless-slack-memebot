@@ -50,7 +50,6 @@ custom:
 #  exclude:
 #    - exclude-me.js
 #    - exclude-me-dir/**
-#  endregion
 
 functions:
   # Handler for our /memebot command
