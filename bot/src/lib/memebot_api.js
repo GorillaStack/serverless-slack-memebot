@@ -4,8 +4,6 @@
 * Higher level logic to handle slash commands
 */
 
-import co from 'co';
-
 // =============
 // Constants
 // =============
@@ -70,24 +68,21 @@ export default class MemebotApi {
     ]);
   }
 
-  searchSlashCommand(argumentString = '', responseUrl) {
-    const _this = this;
-    return co(function* searchGenerator() {
-      const records = yield _this.memeApiManager.search(argumentString);
-      if (records.length === 0) {
-        yield _this.slackApiManager.sendSlackMessage(responseUrl, 'No memes found');
-        return;
-      }
-      let message = '```';
-      for (const record of records) {
-        const slug = record.template.blank.match(/memegen.link\/([^\/]+)/)[1];
-        message += `<${record.template.example} | ${slug}> - `
-          + `"${record.template.name}" - ${record.template.description}\n`;
-      }
+  async searchSlashCommand(argumentString = '', responseUrl) {
+    const records = await this.memeApiManager.search(argumentString);
+    if (records.length === 0) {
+      await this.slackApiManager.sendSlackMessage(responseUrl, 'No memes found');
+      return;
+    }
+    let message = '```';
+    for (const record of records) {
+      const slug = record.template.blank.match(/memegen.link\/([^\/]+)/)[1];
+      message += `<${record.template.example} | ${slug}> - `
+        + `"${record.template.name}" - ${record.template.description}\n`;
+    }
 
-      message += '```';
-      yield _this.slackApiManager.sendSlackMessage(responseUrl, message);
-    });
+    message += '```';
+    await this.slackApiManager.sendSlackMessage(responseUrl, message);
   }
 
   createSlashCommand(argumentString, responseUrl) {
@@ -139,24 +134,21 @@ export default class MemebotApi {
   * @param {Object} - request - request
   * @return {Promise}
   */
-  interpretSlashCommand(request) {
-    const _this = this;
-    return co(function* interpretGenerator() {
-      _this.slackApiManager.checkValidVerificationToken(request);
-      const responseUrl = _this.slackApiManager.getResponseUrl(request);
-      const slashCommandText = _this.slackApiManager.getSlashCommandText(request);
-      const { type, rest } = _this.stripTypeFromCommandText(slashCommandText);
+  async interpretSlashCommand(request) {
+    this.slackApiManager.checkValidVerificationToken(request);
+    const responseUrl = this.slackApiManager.getResponseUrl(request);
+    const slashCommandText = this.slackApiManager.getSlashCommandText(request);
+    const { type, rest } = this.stripTypeFromCommandText(slashCommandText);
 
-      if (/^list/i.test(type)) {
-        yield _this.searchSlashCommand('', responseUrl);
-      } else if (/^search/i.test(type)) {
-        yield _this.searchSlashCommand(rest, responseUrl);
-      } else if (/^create/i.test(type)) {
-        yield _this.createSlashCommand(rest, responseUrl);
-      } else {
-        yield _this.sendHelpMessage(rest, responseUrl);
-      }
-    });
+    if (/^list/i.test(type)) {
+      await this.searchSlashCommand('', responseUrl);
+    } else if (/^search/i.test(type)) {
+      await this.searchSlashCommand(rest, responseUrl);
+    } else if (/^create/i.test(type)) {
+      await this.createSlashCommand(rest, responseUrl);
+    } else {
+      await this.sendHelpMessage(rest, responseUrl);
+    }
   }
 
 }

@@ -11,6 +11,12 @@ provider:
 
 plugins:
   - serverless-offline
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
 
 # you can overwrite defaults here
 #  stage: dev
@@ -49,7 +55,7 @@ plugins:
 functions:
   # Handler for our /memebot command
   memebot_slash_command:
-    handler: dist/functions/memebot_slash_command.handler
+    handler: src/functions/memebot_slash_command.handler
     events:
      - http:
          path: memebot

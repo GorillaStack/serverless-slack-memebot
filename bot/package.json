@@ -29,16 +29,25 @@
   "homepage": "https://github.com/GorillaStack/serverless-slack-memebot#readme",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "babel-runtime": "^6.26.0",
     "bottlejs": "^1.6.0",
     "co": "^4.6.0",
     "dotenv": "^4.0.0",
     "qs": "^6.4.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.3",
+    "source-map-support": "^0.5.6",
     "verror": "^1.9.0",
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "serverless-offline": "^3.10.2"
+    "babel-loader": "^7.1.5",
+    "babel-plugin-source-map-support": "^2.0.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "dotenv-webpack": "^1.5.7",
+    "serverless-offline": "^3.10.2",
+    "serverless-webpack": "^5.2.0",
+    "webpack": "^4.15.1",
+    "webpack-node-externals": "^1.7.2"
   }
 }
