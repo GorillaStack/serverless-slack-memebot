@@ -6,11 +6,17 @@ frameworkVersion: ">1.8.0"
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs8.10
   timeout: 20
 
 plugins:
   - serverless-offline
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
 
 # you can overwrite defaults here
 #  stage: dev
@@ -37,18 +43,18 @@ plugins:
 #    variable1: value1
 
 # you can add packaging information here
-package:
- # include:
- #   - include-me.js
- #   - include-me-dir/**
- exclude:
-   - src/**
-   - package-lock.json
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
 
 functions:
   # Handler for our /memebot command
   memebot_slash_command:
-    handler: dist/functions/memebot_slash_command.handler
+    handler: src/functions/memebot_slash_command.handler
     events:
      - http:
          path: memebot

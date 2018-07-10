@@ -1,0 +1,6 @@
+{
+  "plugins": ["source-map-support", "transform-runtime"],
+  "presets": [
+    ["env", { "node": "8.10" }]
+  ]
+}

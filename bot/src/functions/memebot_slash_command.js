@@ -7,7 +7,6 @@
 * interface with Lambda/API Gateway
 */
 
-import 'babel-polyfill';
 import qs from 'qs';
 import getContainer from '../container';
 
@@ -34,7 +33,7 @@ const parseBody = body => {
   return body;
 };
 
-export const handler = (request, context, callback) => {
+export const handler = (event, context, callback) => {
   // Get our dependency injection container
   const container = getContainer();
 
@@ -45,10 +44,10 @@ export const handler = (request, context, callback) => {
   const memebotApi = container.MemebotApi;
 
   // Some debug level logging
-  logger.debug('/memebot received request', request);
+  logger.debug('/memebot received event', event);
 
 
-  memebotApi.interpretSlashCommand(Object.assign({}, request, { body: parseBody(request.body) }))
+  memebotApi.interpretSlashCommand(Object.assign({}, event, { body: parseBody(event.body) }))
   .then(() => {
     // Success & validation errors/invlid commands
     logger.info('/memebot invocation successfully completed');
